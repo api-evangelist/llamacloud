@@ -1,0 +1,123 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: LlamaCloud
+providerId: llamacloud
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: true
+tags:
+- AI
+- Document Parsing
+- Extraction
+- Indexing
+- Retrieval
+- RAG
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of LlamaCloud spend. LlamaCloud bills a usage-based credit
+  system layered on named subscription tiers. Credits are consumed per page
+  for parsing and extraction (by mode/tier), per exported page for indexing,
+  per retrieval query, and per chat turn. Each plan includes a monthly
+  credit allowance; usage beyond the allowance is billed pay-as-you-go at
+  roughly $1.25 per 1,000 credits. Cost is driven primarily by page volume
+  and the chosen parse/extract tier.
+notes: >-
+  Per-page credit costs and the credit-to-dollar rate are subject to change;
+  verify against the LlamaIndex pricing and developer docs pricing pages
+  during reconciliation.
+sources:
+- https://www.llamaindex.ai/pricing
+- https://developers.llamaindex.ai/python/cloud/general/pricing
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: LlamaIndex
+serviceCategory: AI and Machine Learning
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: LlamaCloud
+  ServiceCategory: AI and Machine Learning
+  ProviderName: LlamaIndex
+  PublisherName: LlamaIndex
+  InvoiceIssuerName: LlamaIndex
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: parse_pages
+  description: Pages parsed by LlamaParse, billed in credits per page by tier (Fast 1, Cost-effective 3, Agentic 10, Agentic Plus 45).
+  unit: pages
+  aggregation: sum
+  dimensions:
+  - account
+  - tier
+  - project
+- name: extract_pages
+  description: Pages processed by LlamaExtract, billed in credits as extract tier (5-15) plus the underlying parse tier.
+  unit: pages
+  aggregation: sum
+  dimensions:
+  - account
+  - tier
+  - agent
+- name: index_exported_pages
+  description: Pages exported into a managed index, billed at 2 credits per page.
+  unit: pages
+  aggregation: sum
+  dimensions:
+  - account
+  - pipeline
+- name: retrieval_queries
+  description: Retrieval queries against a managed index, billed at 1 credit per query.
+  unit: queries
+  aggregation: sum
+  dimensions:
+  - account
+  - pipeline
+- name: chat_turns
+  description: Chat turns over a managed index, billed at 100 credits per turn.
+  unit: turns
+  aggregation: sum
+  dimensions:
+  - account
+  - pipeline
+- name: included_credits
+  description: Monthly credits included with the subscription tier (Free 10k, Starter 40k, Pro 400k).
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: overage_credits
+  description: Credits consumed beyond the plan allowance, billed pay-as-you-go at ~$1.25 per 1,000.
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+principles:
+- name: Visibility
+  description: Pull LlamaCloud usage exports; inspect credit burn by product, tier, project, and pipeline.
+- name: Allocation
+  description: Tag API keys and projects per workload/team; map credit spend to internal cost centers.
+- name: Optimization
+  description: Choose the lowest parse tier that meets quality needs (Fast/Cost-effective vs Agentic); cache parsed files; reuse indexes; batch documents to stay within included credits.
+- name: Accountability
+  description: Assign owners per project/key; review monthly credit consumption against the plan allowance and budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

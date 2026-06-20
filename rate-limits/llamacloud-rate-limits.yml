@@ -1,0 +1,74 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: LlamaCloud
+providerId: llamacloud
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- AI
+- Document Parsing
+- Extraction
+- Indexing
+- Retrieval
+- RAG
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  LlamaCloud enforces per-account limits expressed as request concurrency
+  and throughput on parsing, extraction, and retrieval, plus a monthly
+  credit allowance per plan that effectively caps page/query volume.
+  Concurrency and rate limits scale with the subscription tier, with
+  Enterprise offering roughly 5x higher rate limits. Parsing, extraction,
+  and indexing are asynchronous job-based workloads, so callers poll job
+  status rather than holding long synchronous connections. Specific
+  per-tier numeric limits are not reconciled in this artifact.
+notes: >-
+  Verify current concurrency, requests-per-minute, and per-plan credit
+  allowances in the LlamaCloud console and pricing/docs pages at
+  reconciliation; values change as accounts move between Free, Starter,
+  Pro, and Enterprise tiers.
+sources:
+- https://www.llamaindex.ai/pricing
+- https://developers.llamaindex.ai/python/cloud/general/pricing
+- https://developers.llamaindex.ai/llamaparse/general/faq
+responseCodes:
+  throttled: 429
+limits:
+- name: Parse Job Concurrency
+  scope: account
+  metric: concurrent_jobs
+  limit: see provider documentation
+  notes: Number of in-flight LlamaParse jobs; scales with subscription tier.
+- name: Extraction Job Concurrency
+  scope: account
+  metric: concurrent_jobs
+  limit: see provider documentation
+  notes: Number of in-flight LlamaExtract jobs; scales with subscription tier.
+- name: Requests Per Minute
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Per-account request rate; Enterprise offers ~5x higher limits.
+- name: Retrieval Queries
+  scope: account
+  metric: queries
+  limit: see provider documentation
+  notes: Retrieval throughput against managed indexes; metered at 1 credit per query.
+- name: Monthly Credit Allowance
+  scope: account
+  metric: credits
+  limit: 10000 (Free) / 40000 (Starter) / 400000 (Pro) / custom (Enterprise)
+  notes: Plan-included monthly credits; overage billed pay-as-you-go.
+policies:
+- name: Tiered Limits
+  description: Concurrency and rate limits raise as accounts move from Free to Starter, Pro, and Enterprise agreements.
+- name: Asynchronous Jobs
+  description: Parsing, extraction, and indexing run as async jobs; clients poll job status endpoints rather than blocking.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter on 429 responses and honor Retry-After.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

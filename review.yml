@@ -1,0 +1,90 @@
+aid: llamacloud
+name: LlamaCloud
+review:
+  question: Does LlamaCloud expose a documented public WebSocket API?
+  answer: false
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    LlamaCloud's parsing, extraction, and indexing surfaces are
+    asynchronous job-based REST workflows: a client submits a job over
+    HTTPS and then polls a job-status endpoint until the job reaches a
+    terminal state (SUCCESS / ERROR), then fetches the result. This is
+    request/response polling, not a streaming, Server-Sent Events, or
+    WebSocket transport. No AsyncAPI document was created because no
+    event-driven streaming or webhook delivery transport is documented as
+    a stable public API surface. (LlamaParse mentions optional webhook
+    callbacks in some SDK paths, but no public webhook event schema /
+    delivery contract is documented to model in AsyncAPI.)
+findings:
+  summary: |
+    LlamaCloud does not publish a documented public WebSocket API. The
+    platform is REST (HTTPS) only, served under
+    https://api.cloud.llamaindex.ai/api/v1 (with newer parse/extract
+    operations under /api/v2), authenticated with a Bearer API key.
+    Parsing (LlamaParse), structured extraction (LlamaExtract), and
+    pipeline ingestion are asynchronous: callers POST a job, receive a job
+    id, poll GET job-status, and then GET the result. Retrieval is a
+    synchronous POST that returns ranked nodes. No realtime, bidirectional,
+    or streaming WebSocket (ws:// or wss://) endpoint is documented for any
+    product.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.cloud.llamaindex.ai/api/v1
+      documented: true
+    - protocol: Async Job Polling
+      scheme: https
+      note: Parse / extract / ingestion jobs are submitted then polled via GET job-status endpoints over the same REST surface. Not WebSocket, not SSE.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in the LlamaCloud API reference for parsing, extraction, pipelines, or retrieval as of the review date.
+  endpointsConfirmedRest:
+    - POST   https://api.cloud.llamaindex.ai/api/v1/parsing/upload
+    - GET    https://api.cloud.llamaindex.ai/api/v1/parsing/job/{job_id}
+    - GET    https://api.cloud.llamaindex.ai/api/v1/parsing/job/{job_id}/result/markdown
+    - GET    https://api.cloud.llamaindex.ai/api/v1/parsing/job/{job_id}/result/json
+    - POST   https://api.cloud.llamaindex.ai/api/v2/parse
+    - GET    https://api.cloud.llamaindex.ai/api/v2/parse/{job_id}
+    - POST   https://api.cloud.llamaindex.ai/api/v1/files
+    - GET    https://api.cloud.llamaindex.ai/api/v1/files
+    - POST   https://api.cloud.llamaindex.ai/api/v1/pipelines
+    - GET    https://api.cloud.llamaindex.ai/api/v1/pipelines
+    - GET    https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}
+    - GET    https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}/status
+    - POST   https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}/files
+    - POST   https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}/documents
+    - GET    https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}/documents
+    - POST   https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}/retrieve
+    - POST   https://api.cloud.llamaindex.ai/api/v1/extraction/extraction-agents
+    - GET    https://api.cloud.llamaindex.ai/api/v1/extraction/extraction-agents
+    - POST   https://api.cloud.llamaindex.ai/api/v1/extraction/jobs
+    - GET    https://api.cloud.llamaindex.ai/api/v1/extraction/jobs/{job_id}
+    - GET    https://api.cloud.llamaindex.ai/api/v1/extraction/jobs/{job_id}/result
+    - POST   https://api.cloud.llamaindex.ai/api/v2/extract
+    - GET    https://api.cloud.llamaindex.ai/api/v2/extract/{job_id}
+sources:
+  - url: https://developers.llamaindex.ai/cloud-api-reference
+    type: APIReference
+    note: Full LlamaCloud REST reference; all documented operations are HTTPS REST.
+  - url: https://developers.llamaindex.ai/cloud-api-reference/category/parsing
+    type: APIReference
+    note: Parsing endpoints (v2 parse plus v1 parsing/upload + job result) are REST with async job polling.
+  - url: https://developers.llamaindex.ai/python/cloud/llamaextract/getting_started/api
+    type: Documentation
+    note: LlamaExtract REST usage; submit extraction job, poll status, fetch result.
+  - url: https://developers.llamaindex.ai/python/cloud/llamacloud/guides/api_sdk
+    type: Documentation
+    note: Pipelines, indexes, and retrieval REST endpoints; POST /pipelines/{id}/retrieve is synchronous.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or streaming/SSE protocol surface exists. LlamaCloud's
+    asynchronous workloads use REST job submission plus GET status polling,
+    which is request/response, not an event-driven transport, so no
+    AsyncAPI document was authored. apis.yml references the REST OpenAPI
+    and Postman/Open Collection artifacts only.

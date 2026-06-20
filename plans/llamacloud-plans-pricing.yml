@@ -1,0 +1,259 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: LlamaCloud
+providerId: llamacloud
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: true
+tags:
+- AI
+- Document Parsing
+- Extraction
+- Indexing
+- Retrieval
+- RAG
+- Plans
+description: >-
+  LlamaCloud combines named subscription tiers (Free, Starter, Pro,
+  Enterprise) with a usage-based credit system. Credits are consumed per
+  page (or per minute for audio) and vary by product and processing mode:
+  LlamaParse Fast (1 credit/page), Cost-effective (3), Agentic (10), and
+  Agentic Plus (45); LlamaExtract adds an extract tier (Cost-effective 5,
+  Agentic 15) on top of the parse tier; indexing charges per exported page,
+  per retrieval query, and per chat turn. Beyond the credits included in a
+  plan, additional credits are billed pay-as-you-go at roughly $1.25 per
+  1,000 credits.
+notes: >-
+  Credit costs and per-page rates are published on the LlamaIndex pricing
+  and developer docs pricing pages and change over time; verify current
+  rates and tier inclusions at reconciliation.
+sources:
+- https://www.llamaindex.ai/pricing
+- https://developers.llamaindex.ai/python/cloud/general/pricing
+- https://cloud.llamaindex.ai
+plans:
+- id: llamacloud-free
+  name: Free
+  type: free
+  description: >-
+    Free tier for prototyping with 10,000 credits per month and access to
+    every product module (Parse, Extract, Index, Retrieve).
+  entries:
+  - label: Included Monthly Credits
+    name: free_credits
+    type: free
+    metric: credits
+    limit: 10000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0
+    userMultiplied: false
+  elements:
+  - name: LlamaParse
+  - name: LlamaExtract
+  - name: Pipelines and Indexes
+  - name: Retrieval
+- id: llamacloud-starter
+  name: Starter
+  type: subscription
+  description: >-
+    $50 per month including 40,000 credits, pay-as-you-go up to 400,000
+    credits, and up to 5 users.
+  entries:
+  - label: Monthly Subscription
+    name: starter_subscription
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $50 per month
+    userMultiplied: false
+  - label: Included Monthly Credits
+    name: starter_credits
+    type: included
+    metric: credits
+    limit: 40000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Additional Credits
+    name: starter_overage
+    type: usage
+    metric: credits
+    limit: 400000
+    timeFrame: month
+    geo: global
+    unit: 1000
+    price: ~$1.25 per 1,000 credits
+    userMultiplied: false
+  elements:
+  - name: LlamaParse
+  - name: LlamaExtract
+  - name: Pipelines and Indexes
+  - name: Retrieval
+- id: llamacloud-pro
+  name: Pro
+  type: subscription
+  description: >-
+    $500 per month including 400,000 credits, pay-as-you-go up to 4,000,000
+    credits, up to 10 users, and Slack support.
+  entries:
+  - label: Monthly Subscription
+    name: pro_subscription
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $500 per month
+    userMultiplied: false
+  - label: Included Monthly Credits
+    name: pro_credits
+    type: included
+    metric: credits
+    limit: 400000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Additional Credits
+    name: pro_overage
+    type: usage
+    metric: credits
+    limit: 4000000
+    timeFrame: month
+    geo: global
+    unit: 1000
+    price: ~$1.25 per 1,000 credits
+    userMultiplied: false
+  elements:
+  - name: LlamaParse
+  - name: LlamaExtract
+  - name: Pipelines and Indexes
+  - name: Retrieval
+- id: llamacloud-usage
+  name: Credit Usage Rates
+  type: usage
+  description: >-
+    Per-page and per-operation credit consumption applied within all plans.
+    1,000 credits is approximately $1.25.
+  entries:
+  - label: LlamaParse Fast
+    name: parse_fast
+    type: usage
+    metric: pages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 1 credit per page
+    userMultiplied: false
+  - label: LlamaParse Cost-effective
+    name: parse_cost_effective
+    type: usage
+    metric: pages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 3 credits per page
+    userMultiplied: false
+  - label: LlamaParse Agentic
+    name: parse_agentic
+    type: usage
+    metric: pages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 10 credits per page
+    userMultiplied: false
+  - label: LlamaParse Agentic Plus
+    name: parse_agentic_plus
+    type: usage
+    metric: pages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 45 credits per page
+    userMultiplied: false
+  - label: LlamaExtract (extract tier + parse tier)
+    name: extract
+    type: usage
+    metric: pages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 5 (cost-effective) to 15 (agentic) credits per page plus parse tier
+    userMultiplied: false
+  - label: Index Exported Page
+    name: index_exported_page
+    type: usage
+    metric: pages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 2 credits per exported page
+    userMultiplied: false
+  - label: Retrieval Query
+    name: retrieval_query
+    type: usage
+    metric: queries
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 1 credit per query
+    userMultiplied: false
+  - label: Chat Turn
+    name: chat_turn
+    type: usage
+    metric: turns
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 100 credits per turn
+    userMultiplied: false
+  elements:
+  - name: LlamaParse
+  - name: LlamaExtract
+  - name: Indexing
+  - name: Retrieval
+- id: llamacloud-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Custom pricing with volume credit discounts, 5x higher rate limits,
+    SSO, on-prem / private deployment options, and a dedicated account
+    manager. Contact LlamaIndex sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Higher Rate Limits
+  - name: Private Deployment
+  - name: Dedicated Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

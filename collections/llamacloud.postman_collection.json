@@ -1,0 +1,343 @@
+{
+  "info": {
+    "name": "LlamaCloud API",
+    "description": {
+      "content": "REST API for the LlamaCloud managed document platform from LlamaIndex: LlamaParse, pipelines/indexes, documents, retrieval, and LlamaExtract.",
+      "type": "text/plain"
+    },
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{LLAMA_CLOUD_API_KEY}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.cloud.llamaindex.ai/api/v1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Parsing",
+      "description": {
+        "content": "LlamaParse document parsing jobs and results.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "name": "Upload a file to start a parse job",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/parsing/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["parsing", "upload"]
+            },
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "file", "type": "file", "src": [] },
+                { "key": "result_type", "value": "markdown", "type": "text" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get parse job status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/parsing/job/:job_id",
+              "host": ["{{baseUrl}}"],
+              "path": ["parsing", "job", ":job_id"],
+              "variable": [{ "key": "job_id", "value": "<string>" }]
+            }
+          }
+        },
+        {
+          "name": "Get parse result as Markdown",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/parsing/job/:job_id/result/markdown",
+              "host": ["{{baseUrl}}"],
+              "path": ["parsing", "job", ":job_id", "result", "markdown"],
+              "variable": [{ "key": "job_id", "value": "<string>" }]
+            }
+          }
+        },
+        {
+          "name": "Get parse result as JSON",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/parsing/job/:job_id/result/json",
+              "host": ["{{baseUrl}}"],
+              "path": ["parsing", "job", ":job_id", "result", "json"],
+              "variable": [{ "key": "job_id", "value": "<string>" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pipelines",
+      "description": {
+        "content": "Managed ingestion and indexing pipelines.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "name": "Create or upsert a pipeline",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/pipelines",
+              "host": ["{{baseUrl}}"],
+              "path": ["pipelines"]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "List pipelines",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/pipelines",
+              "host": ["{{baseUrl}}"],
+              "path": ["pipelines"]
+            }
+          }
+        },
+        {
+          "name": "Get a pipeline",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/pipelines/:pipeline_id",
+              "host": ["{{baseUrl}}"],
+              "path": ["pipelines", ":pipeline_id"],
+              "variable": [{ "key": "pipeline_id", "value": "<string>" }]
+            }
+          }
+        },
+        {
+          "name": "Get pipeline ingestion status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/pipelines/:pipeline_id/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["pipelines", ":pipeline_id", "status"],
+              "variable": [{ "key": "pipeline_id", "value": "<string>" }]
+            }
+          }
+        },
+        {
+          "name": "Add files to a pipeline",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/pipelines/:pipeline_id/files",
+              "host": ["{{baseUrl}}"],
+              "path": ["pipelines", ":pipeline_id", "files"],
+              "variable": [{ "key": "pipeline_id", "value": "<string>" }]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  { \"file_id\": \"<string>\" }\n]",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Documents",
+      "description": {
+        "content": "Files and pipeline documents.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "name": "Upload a file",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/files",
+              "host": ["{{baseUrl}}"],
+              "path": ["files"]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "upload_file", "type": "file", "src": [] }]
+            }
+          }
+        },
+        {
+          "name": "List files",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/files",
+              "host": ["{{baseUrl}}"],
+              "path": ["files"]
+            }
+          }
+        },
+        {
+          "name": "Add documents to a pipeline",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/pipelines/:pipeline_id/documents",
+              "host": ["{{baseUrl}}"],
+              "path": ["pipelines", ":pipeline_id", "documents"],
+              "variable": [{ "key": "pipeline_id", "value": "<string>" }]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  { \"text\": \"<string>\", \"metadata\": {} }\n]",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "List pipeline documents",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/pipelines/:pipeline_id/documents",
+              "host": ["{{baseUrl}}"],
+              "path": ["pipelines", ":pipeline_id", "documents"],
+              "variable": [{ "key": "pipeline_id", "value": "<string>" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Retrieval",
+      "description": {
+        "content": "Query a managed index for relevant chunks.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "name": "Retrieve relevant chunks from a pipeline index",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/pipelines/:pipeline_id/retrieve",
+              "host": ["{{baseUrl}}"],
+              "path": ["pipelines", ":pipeline_id", "retrieve"],
+              "variable": [{ "key": "pipeline_id", "value": "<string>" }]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"dense_similarity_top_k\": 6,\n  \"enable_reranking\": true\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Extraction",
+      "description": {
+        "content": "LlamaExtract schema-driven structured extraction.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "name": "Create an extraction agent",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/extraction/extraction-agents",
+              "host": ["{{baseUrl}}"],
+              "path": ["extraction", "extraction-agents"]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"data_schema\": {}\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "List extraction agents",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/extraction/extraction-agents",
+              "host": ["{{baseUrl}}"],
+              "path": ["extraction", "extraction-agents"]
+            }
+          }
+        },
+        {
+          "name": "Run an extraction job",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/extraction/jobs",
+              "host": ["{{baseUrl}}"],
+              "path": ["extraction", "jobs"]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"extraction_agent_id\": \"<string>\",\n  \"file_id\": \"<string>\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Get extraction job status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/extraction/jobs/:job_id",
+              "host": ["{{baseUrl}}"],
+              "path": ["extraction", "jobs", ":job_id"],
+              "variable": [{ "key": "job_id", "value": "<string>" }]
+            }
+          }
+        },
+        {
+          "name": "Get extraction job result",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/extraction/jobs/:job_id/result",
+              "host": ["{{baseUrl}}"],
+              "path": ["extraction", "jobs", ":job_id", "result"],
+              "variable": [{ "key": "job_id", "value": "<string>" }]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

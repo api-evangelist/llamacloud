@@ -1,0 +1,215 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LlamaCloud API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{LLAMA_CLOUD_API_KEY}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Parsing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Upload a file to start a parse job", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/parsing/upload",
+            "body": { "type": "multipart-form", "data": [] }
+          },
+          "docs": "Uploads a document and creates an asynchronous LlamaParse job."
+        },
+        {
+          "info": { "name": "Get parse job status", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/parsing/job/{job_id}"
+          },
+          "docs": "Returns the status of a parse job; poll until SUCCESS."
+        },
+        {
+          "info": { "name": "Get parse result as Markdown", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/parsing/job/{job_id}/result/markdown"
+          },
+          "docs": "Returns the parse result as Markdown."
+        },
+        {
+          "info": { "name": "Get parse result as JSON", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/parsing/job/{job_id}/result/json"
+          },
+          "docs": "Returns the parse result as structured JSON."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pipelines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Create or upsert a pipeline", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines",
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Creates a managed ingestion and indexing pipeline."
+        },
+        {
+          "info": { "name": "List pipelines", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines"
+          },
+          "docs": "Lists pipelines."
+        },
+        {
+          "info": { "name": "Get a pipeline", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}"
+          },
+          "docs": "Returns a single pipeline."
+        },
+        {
+          "info": { "name": "Get pipeline ingestion status", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}/status"
+          },
+          "docs": "Returns ingestion status for a pipeline."
+        },
+        {
+          "info": { "name": "Add files to a pipeline", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}/files",
+            "body": { "type": "json", "data": "[]" }
+          },
+          "docs": "Attaches uploaded files to a pipeline for ingestion."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Upload a file", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/files",
+            "body": { "type": "multipart-form", "data": [] }
+          },
+          "docs": "Uploads a file to LlamaCloud."
+        },
+        {
+          "info": { "name": "List files", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/files"
+          },
+          "docs": "Lists uploaded files."
+        },
+        {
+          "info": { "name": "Add documents to a pipeline", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}/documents",
+            "body": { "type": "json", "data": "[]" }
+          },
+          "docs": "Adds raw documents directly to a pipeline's managed index."
+        },
+        {
+          "info": { "name": "List pipeline documents", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}/documents"
+          },
+          "docs": "Lists documents in a pipeline."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Retrieval",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Retrieve relevant chunks from a pipeline index", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines/{pipeline_id}/retrieve",
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Runs a retrieval query and returns the most relevant nodes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Extraction",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Create an extraction agent", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/extraction/extraction-agents",
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Defines a LlamaExtract agent bound to a JSON data schema."
+        },
+        {
+          "info": { "name": "List extraction agents", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/extraction/extraction-agents"
+          },
+          "docs": "Lists extraction agents."
+        },
+        {
+          "info": { "name": "Run an extraction job", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/extraction/jobs",
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Runs an extraction agent against an uploaded file."
+        },
+        {
+          "info": { "name": "Get extraction job status", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/extraction/jobs/{job_id}"
+          },
+          "docs": "Returns the status of an extraction job."
+        },
+        {
+          "info": { "name": "Get extraction job result", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/extraction/jobs/{job_id}/result"
+          },
+          "docs": "Returns the structured extraction result."
+        }
+      ]
+    }
+  ]
+}

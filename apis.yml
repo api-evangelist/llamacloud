@@ -1,0 +1,151 @@
+aid: llamacloud
+url: https://raw.githubusercontent.com/api-evangelist/llamacloud/refs/heads/main/apis.yml
+name: LlamaCloud
+kind: company
+description: LlamaCloud is the managed document parsing, extraction, indexing, and
+  retrieval platform from LlamaIndex. It exposes REST APIs at https://api.cloud.llamaindex.ai
+  for LlamaParse (document parsing to Markdown/JSON), managed ingestion pipelines and
+  indexes, document management, retrieval, and LlamaExtract (schema-driven structured
+  extraction), all secured with a Bearer API key. This is the hosted cloud platform,
+  distinct from the open-source LlamaIndex framework.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- AI
+- Document Parsing
+- Extraction
+- Indexing
+- Retrieval
+- RAG
+created: '2026-06-20'
+modified: '2026-06-20'
+specificationVersion: '0.19'
+apis:
+- aid: llamacloud:llamaparse-api
+  name: LlamaParse API
+  tags:
+  - Parsing
+  - Documents
+  - OCR
+  - Markdown
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.llamaindex.ai/llamaparse
+  baseURL: https://api.cloud.llamaindex.ai/api/v1
+  properties:
+  - url: https://developers.llamaindex.ai/llamaparse
+    type: Documentation
+  - url: https://developers.llamaindex.ai/cloud-api-reference/category/parsing
+    type: APIReference
+  - url: openapi/llamacloud-openapi.yml
+    type: OpenAPI
+  - url: collections/llamacloud.postman_collection.json
+    type: Postman
+  description: Asynchronous document parsing that uploads files (PDF, DOCX, PPTX, images,
+    and more) and returns clean Markdown or structured JSON. Submit a parse job, poll
+    job status, and retrieve results in Markdown or JSON across Fast, Balanced, and
+    Agentic tiers.
+- aid: llamacloud:pipelines-indexes-api
+  name: LlamaCloud Pipelines and Indexes API
+  tags:
+  - Pipelines
+  - Indexes
+  - Ingestion
+  - Embeddings
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.llamaindex.ai/python/cloud/llamacloud/guides/api_sdk
+  baseURL: https://api.cloud.llamaindex.ai/api/v1
+  properties:
+  - url: https://developers.llamaindex.ai/python/cloud/llamacloud/guides/api_sdk
+    type: Documentation
+  - url: https://developers.llamaindex.ai/cloud-api-reference
+    type: APIReference
+  - url: openapi/llamacloud-openapi.yml
+    type: OpenAPI
+  - url: collections/llamacloud.postman_collection.json
+    type: Postman
+  description: Managed ingestion and indexing pipelines that chunk, embed, and store
+    documents into a scalable vector index with no infrastructure to manage. Create
+    and configure pipelines, attach files and data sources, and monitor ingestion
+    status.
+- aid: llamacloud:documents-api
+  name: LlamaCloud Documents and Files API
+  tags:
+  - Documents
+  - Files
+  - Storage
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.llamaindex.ai/cloud-api-reference
+  baseURL: https://api.cloud.llamaindex.ai/api/v1
+  properties:
+  - url: https://developers.llamaindex.ai/cloud-api-reference
+    type: Documentation
+  - url: https://developers.llamaindex.ai/cloud-api-reference
+    type: APIReference
+  - url: openapi/llamacloud-openapi.yml
+    type: OpenAPI
+  - url: collections/llamacloud.postman_collection.json
+    type: Postman
+  description: Upload, list, and manage files and the documents inside a pipeline.
+    Add documents to an index, list pipeline documents, fetch document chunks, and
+    delete documents from the managed index.
+- aid: llamacloud:retrieval-api
+  name: LlamaCloud Retrieval API
+  tags:
+  - Retrieval
+  - Search
+  - RAG
+  - Reranking
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.llamaindex.ai/python/cloud/llamacloud/guides/api_sdk
+  baseURL: https://api.cloud.llamaindex.ai/api/v1
+  properties:
+  - url: https://developers.llamaindex.ai/python/cloud/llamacloud/guides/api_sdk
+    type: Documentation
+  - url: https://developers.llamaindex.ai/cloud-api-reference
+    type: APIReference
+  - url: openapi/llamacloud-openapi.yml
+    type: OpenAPI
+  - url: collections/llamacloud.postman_collection.json
+    type: Postman
+  description: Retrieve the most relevant chunks from a managed index for a natural
+    language query, with Fast, Accurate, and Advanced retrieval modes, optional reranking,
+    and metadata filtering for RAG workloads.
+- aid: llamacloud:llamaextract-api
+  name: LlamaExtract API
+  tags:
+  - Extraction
+  - Structured Data
+  - Schema
+  - Agents
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.llamaindex.ai/llamaextract
+  baseURL: https://api.cloud.llamaindex.ai/api/v1
+  properties:
+  - url: https://developers.llamaindex.ai/llamaextract
+    type: Documentation
+  - url: https://developers.llamaindex.ai/python/cloud/llamaextract/getting_started/api
+    type: APIReference
+  - url: openapi/llamacloud-openapi.yml
+    type: OpenAPI
+  - url: collections/llamacloud.postman_collection.json
+    type: Postman
+  description: Schema-driven structured data extraction from documents. Define an extraction
+    agent with a JSON data schema, run extraction jobs against uploaded files, and
+    retrieve typed JSON results with field-level citations and metadata.
+common:
+- type: GitHubOrganization
+  url: https://github.com/run-llama
+- type: LinkedIn
+  url: https://www.linkedin.com/company/llamaindex
+- type: Website
+  url: https://cloud.llamaindex.ai
+- type: Documentation
+  url: https://developers.llamaindex.ai
+- type: Plans
+  url: plans/llamacloud-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/llamacloud-rate-limits.yml
+- type: FinOps
+  url: finops/llamacloud-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
