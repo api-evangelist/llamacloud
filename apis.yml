@@ -132,6 +132,10 @@ apis:
     agent with a JSON data schema, run extraction jobs against uploaded files, and
     retrieve typed JSON results with field-level citations and metadata.
 common:
+- type: DomainSecurity
+  url: security/llamacloud-domain-security.yml
+- type: Authentication
+  url: authentication/llamacloud-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/run-llama
 - type: LinkedIn
@@ -146,6 +150,8 @@ common:
   url: rate-limits/llamacloud-rate-limits.yml
 - type: FinOps
   url: finops/llamacloud-finops.yml
+- url: https://www.llamaindex.ai/blog
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
