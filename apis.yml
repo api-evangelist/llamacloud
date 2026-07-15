@@ -132,6 +132,8 @@ apis:
     agent with a JSON data schema, run extraction jobs against uploaded files, and
     retrieve typed JSON results with field-level citations and metadata.
 common:
+- type: AgenticAccess
+  url: agentic-access/llamacloud-agentic-access.yml
 - type: DomainSecurity
   url: security/llamacloud-domain-security.yml
 - type: Authentication
