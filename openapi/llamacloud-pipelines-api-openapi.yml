@@ -1,0 +1,216 @@
+openapi: 3.0.1
+info:
+  title: LlamaCloud Documents Pipelines API
+  description: REST API for the LlamaCloud managed document platform from LlamaIndex, covering LlamaParse document parsing, managed ingestion pipelines and indexes, document and file management, retrieval, and LlamaExtract structured extraction. All endpoints are authenticated with a Bearer API key.
+  termsOfService: https://www.llamaindex.ai/terms-of-service
+  contact:
+    name: LlamaIndex Support
+    email: support@llamaindex.ai
+  version: '1.0'
+servers:
+- url: https://api.cloud.llamaindex.ai/api/v1
+  description: LlamaCloud v1 API
+security:
+- bearerAuth: []
+tags:
+- name: Pipelines
+  description: Managed ingestion and indexing pipelines.
+paths:
+  /pipelines:
+    post:
+      operationId: createPipeline
+      tags:
+      - Pipelines
+      summary: Create or upsert a pipeline
+      description: Creates a managed ingestion and indexing pipeline.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PipelineCreate'
+      responses:
+        '200':
+          description: Pipeline created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    get:
+      operationId: listPipelines
+      tags:
+      - Pipelines
+      summary: List pipelines
+      parameters:
+      - name: project_id
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of pipelines.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pipeline'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /pipelines/{pipeline_id}:
+    get:
+      operationId: getPipeline
+      tags:
+      - Pipelines
+      summary: Get a pipeline
+      parameters:
+      - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Pipeline detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /pipelines/{pipeline_id}/status:
+    get:
+      operationId: getPipelineStatus
+      tags:
+      - Pipelines
+      summary: Get pipeline ingestion status
+      parameters:
+      - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Ingestion status.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                    - NOT_STARTED
+                    - IN_PROGRESS
+                    - SUCCESS
+                    - ERROR
+                    - PARTIAL_SUCCESS
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /pipelines/{pipeline_id}/files:
+    post:
+      operationId: addFilesToPipeline
+      tags:
+      - Pipelines
+      summary: Add files to a pipeline
+      description: Attaches previously uploaded files to a pipeline for ingestion.
+      parameters:
+      - $ref: '#/components/parameters/PipelineId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  file_id:
+                    type: string
+      responses:
+        '200':
+          description: Files added to the pipeline.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PipelineFile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    PipelineId:
+      name: pipeline_id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    Pipeline:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        project_id:
+          type: string
+        pipeline_type:
+          type: string
+          enum:
+          - MANAGED
+          - PLAYGROUND
+        created_at:
+          type: string
+          format: date-time
+    PipelineFile:
+      type: object
+      properties:
+        id:
+          type: string
+        file_id:
+          type: string
+        pipeline_id:
+          type: string
+    PipelineCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        embedding_config:
+          type: object
+          additionalProperties: true
+        transform_config:
+          type: object
+          additionalProperties: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: LlamaCloud API key sent as a Bearer token.

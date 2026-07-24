@@ -1,0 +1,163 @@
+openapi: 3.0.1
+info:
+  title: LlamaCloud Documents API
+  description: REST API for the LlamaCloud managed document platform from LlamaIndex, covering LlamaParse document parsing, managed ingestion pipelines and indexes, document and file management, retrieval, and LlamaExtract structured extraction. All endpoints are authenticated with a Bearer API key.
+  termsOfService: https://www.llamaindex.ai/terms-of-service
+  contact:
+    name: LlamaIndex Support
+    email: support@llamaindex.ai
+  version: '1.0'
+servers:
+- url: https://api.cloud.llamaindex.ai/api/v1
+  description: LlamaCloud v1 API
+security:
+- bearerAuth: []
+tags:
+- name: Documents
+  description: Files and pipeline documents.
+paths:
+  /files:
+    post:
+      operationId: uploadFile
+      tags:
+      - Documents
+      summary: Upload a file
+      description: Uploads a file to LlamaCloud for use in pipelines or extraction.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                upload_file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: File uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      operationId: listFiles
+      tags:
+      - Documents
+      summary: List files
+      parameters:
+      - name: project_id
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of files.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/File'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /pipelines/{pipeline_id}/documents:
+    post:
+      operationId: createPipelineDocuments
+      tags:
+      - Documents
+      summary: Add documents to a pipeline
+      description: Adds raw documents directly to a pipeline's managed index.
+      parameters:
+      - $ref: '#/components/parameters/PipelineId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Document'
+      responses:
+        '200':
+          description: Documents added.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      operationId: listPipelineDocuments
+      tags:
+      - Documents
+      summary: List pipeline documents
+      parameters:
+      - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: A list of documents in the pipeline.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    File:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        file_size:
+          type: integer
+        file_type:
+          type: string
+        project_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+  parameters:
+    PipelineId:
+      name: pipeline_id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: LlamaCloud API key sent as a Bearer token.

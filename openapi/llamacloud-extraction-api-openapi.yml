@@ -1,0 +1,224 @@
+openapi: 3.0.1
+info:
+  title: LlamaCloud Documents Extraction API
+  description: REST API for the LlamaCloud managed document platform from LlamaIndex, covering LlamaParse document parsing, managed ingestion pipelines and indexes, document and file management, retrieval, and LlamaExtract structured extraction. All endpoints are authenticated with a Bearer API key.
+  termsOfService: https://www.llamaindex.ai/terms-of-service
+  contact:
+    name: LlamaIndex Support
+    email: support@llamaindex.ai
+  version: '1.0'
+servers:
+- url: https://api.cloud.llamaindex.ai/api/v1
+  description: LlamaCloud v1 API
+security:
+- bearerAuth: []
+tags:
+- name: Extraction
+  description: LlamaExtract schema-driven structured extraction.
+paths:
+  /extraction/extraction-agents:
+    post:
+      operationId: createExtractionAgent
+      tags:
+      - Extraction
+      summary: Create an extraction agent
+      description: Defines a LlamaExtract agent bound to a JSON data schema describing the fields to extract from documents.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtractionAgentCreate'
+      responses:
+        '200':
+          description: Extraction agent created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionAgent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    get:
+      operationId: listExtractionAgents
+      tags:
+      - Extraction
+      summary: List extraction agents
+      responses:
+        '200':
+          description: A list of extraction agents.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExtractionAgent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /extraction/jobs:
+    post:
+      operationId: runExtractionJob
+      tags:
+      - Extraction
+      summary: Run an extraction job
+      description: Runs an extraction agent against an uploaded file and returns an async job id. Poll the job to retrieve the structured result.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtractionJobCreate'
+      responses:
+        '200':
+          description: Extraction job created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /extraction/jobs/{job_id}:
+    get:
+      operationId: getExtractionJob
+      tags:
+      - Extraction
+      summary: Get extraction job status
+      parameters:
+      - $ref: '#/components/parameters/JobId'
+      responses:
+        '200':
+          description: Extraction job status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /extraction/jobs/{job_id}/result:
+    get:
+      operationId: getExtractionJobResult
+      tags:
+      - Extraction
+      summary: Get extraction job result
+      parameters:
+      - $ref: '#/components/parameters/JobId'
+      responses:
+        '200':
+          description: Structured extraction result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    ExtractionAgentCreate:
+      type: object
+      required:
+      - name
+      - data_schema
+      properties:
+        name:
+          type: string
+        data_schema:
+          type: object
+          additionalProperties: true
+        config:
+          type: object
+          additionalProperties: true
+    ExtractionAgent:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        data_schema:
+          type: object
+          additionalProperties: true
+        project_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    ExtractionResult:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+        extraction_metadata:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    ExtractionJobCreate:
+      type: object
+      required:
+      - extraction_agent_id
+      - file_id
+      properties:
+        extraction_agent_id:
+          type: string
+        file_id:
+          type: string
+    ExtractionJob:
+      type: object
+      properties:
+        id:
+          type: string
+        extraction_agent_id:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - RUNNING
+          - SUCCESS
+          - ERROR
+          - CANCELLED
+        error_message:
+          type: string
+          nullable: true
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    JobId:
+      name: job_id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: LlamaCloud API key sent as a Bearer token.

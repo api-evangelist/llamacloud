@@ -1,0 +1,202 @@
+openapi: 3.0.1
+info:
+  title: LlamaCloud Documents Parsing API
+  description: REST API for the LlamaCloud managed document platform from LlamaIndex, covering LlamaParse document parsing, managed ingestion pipelines and indexes, document and file management, retrieval, and LlamaExtract structured extraction. All endpoints are authenticated with a Bearer API key.
+  termsOfService: https://www.llamaindex.ai/terms-of-service
+  contact:
+    name: LlamaIndex Support
+    email: support@llamaindex.ai
+  version: '1.0'
+servers:
+- url: https://api.cloud.llamaindex.ai/api/v1
+  description: LlamaCloud v1 API
+security:
+- bearerAuth: []
+tags:
+- name: Parsing
+  description: LlamaParse document parsing jobs and results.
+paths:
+  /parsing/upload:
+    post:
+      operationId: uploadParsingJob
+      tags:
+      - Parsing
+      summary: Upload a file to start a parse job
+      description: Uploads a document and creates an asynchronous LlamaParse job. Returns a job id used to poll status and retrieve results in Markdown or JSON.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The document to parse (PDF, DOCX, PPTX, image, etc.).
+                parsing_instruction:
+                  type: string
+                  description: Natural-language instructions to guide parsing.
+                result_type:
+                  type: string
+                  enum:
+                  - markdown
+                  - text
+                  - json
+                  default: markdown
+                language:
+                  type: string
+                  description: Primary document language hint (e.g. en).
+      responses:
+        '200':
+          description: Parse job created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParsingJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /parsing/job/{job_id}:
+    get:
+      operationId: getParsingJob
+      tags:
+      - Parsing
+      summary: Get parse job status
+      description: Returns the status of a parse job. Poll until status is SUCCESS.
+      parameters:
+      - $ref: '#/components/parameters/JobId'
+      responses:
+        '200':
+          description: Parse job status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParsingJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /parsing/job/{job_id}/result/markdown:
+    get:
+      operationId: getParsingResultMarkdown
+      tags:
+      - Parsing
+      summary: Get parse result as Markdown
+      parameters:
+      - $ref: '#/components/parameters/JobId'
+      responses:
+        '200':
+          description: Markdown parse result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarkdownResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /parsing/job/{job_id}/result/json:
+    get:
+      operationId: getParsingResultJson
+      tags:
+      - Parsing
+      summary: Get parse result as structured JSON
+      parameters:
+      - $ref: '#/components/parameters/JobId'
+      responses:
+        '200':
+          description: JSON parse result with pages, items, and metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    ParsingJob:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - RUNNING
+          - SUCCESS
+          - ERROR
+          - CANCELLED
+        error_message:
+          type: string
+          nullable: true
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    MarkdownResult:
+      type: object
+      properties:
+        markdown:
+          type: string
+        job_metadata:
+          type: object
+          additionalProperties: true
+    JsonResult:
+      type: object
+      properties:
+        pages:
+          type: array
+          items:
+            type: object
+            properties:
+              page:
+                type: integer
+              text:
+                type: string
+              md:
+                type: string
+              items:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        job_metadata:
+          type: object
+          additionalProperties: true
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    JobId:
+      name: job_id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: LlamaCloud API key sent as a Bearer token.

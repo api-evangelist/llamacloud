@@ -1,0 +1,126 @@
+openapi: 3.0.1
+info:
+  title: LlamaCloud Documents Retrieval API
+  description: REST API for the LlamaCloud managed document platform from LlamaIndex, covering LlamaParse document parsing, managed ingestion pipelines and indexes, document and file management, retrieval, and LlamaExtract structured extraction. All endpoints are authenticated with a Bearer API key.
+  termsOfService: https://www.llamaindex.ai/terms-of-service
+  contact:
+    name: LlamaIndex Support
+    email: support@llamaindex.ai
+  version: '1.0'
+servers:
+- url: https://api.cloud.llamaindex.ai/api/v1
+  description: LlamaCloud v1 API
+security:
+- bearerAuth: []
+tags:
+- name: Retrieval
+  description: Query a managed index for relevant chunks.
+paths:
+  /pipelines/{pipeline_id}/retrieve:
+    post:
+      operationId: retrieveFromPipeline
+      tags:
+      - Retrieval
+      summary: Retrieve relevant chunks from a pipeline index
+      description: Runs a retrieval query against a pipeline's managed index and returns the most relevant nodes, with optional reranking and metadata filters.
+      parameters:
+      - $ref: '#/components/parameters/PipelineId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetrieveRequest'
+      responses:
+        '200':
+          description: Retrieval results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+components:
+  schemas:
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+    RetrieveRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+        dense_similarity_top_k:
+          type: integer
+          default: 6
+        sparse_similarity_top_k:
+          type: integer
+        enable_reranking:
+          type: boolean
+          default: true
+        rerank_top_n:
+          type: integer
+        retrieval_mode:
+          type: string
+          enum:
+          - chunks
+          - files_via_metadata
+          - files_via_content
+          - auto_routed
+        filters:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    RetrieveResponse:
+      type: object
+      properties:
+        retrieval_nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              node:
+                $ref: '#/components/schemas/Document'
+              score:
+                type: number
+                format: float
+  parameters:
+    PipelineId:
+      name: pipeline_id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: LlamaCloud API key sent as a Bearer token.
