@@ -1,0 +1,22 @@
+{
+  "provider": "llamacloud",
+  "sources": [
+    "llamacloud-documents-api-openapi.yml",
+    "llamacloud-extraction-api-openapi.yml",
+    "llamacloud-parsing-api-openapi.yml",
+    "llamacloud-pipelines-api-openapi.yml",
+    "llamacloud-retrieval-api-openapi.yml"
+  ],
+  "outputs": [
+    "llamacloud-documents-api-openapi.yml",
+    "llamacloud-extraction-api-openapi.yml",
+    "llamacloud-parsing-api-openapi.yml",
+    "llamacloud-pipelines-api-openapi.yml",
+    "llamacloud-retrieval-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
