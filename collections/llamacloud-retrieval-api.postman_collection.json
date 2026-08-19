@@ -1,0 +1,282 @@
+{
+  "item": [
+    {
+      "id": "f3cbb5a3-e4b0-42c2-9834-97ff9a1064ea",
+      "name": "Retrieval",
+      "description": {
+        "content": "Query a managed index for relevant chunks.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fe37fb9e-73aa-4838-83b3-9c4a5de8ea92",
+          "name": "Retrieve relevant chunks from a pipeline index",
+          "request": {
+            "name": "Retrieve relevant chunks from a pipeline index",
+            "description": {
+              "content": "Runs a retrieval query against a pipeline's managed index and returns the most relevant nodes, with optional reranking and metadata filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pipelines",
+                ":pipeline_id",
+                "retrieve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pipeline_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"dense_similarity_top_k\": 6,\n  \"sparse_similarity_top_k\": \"<integer>\",\n  \"enable_reranking\": true,\n  \"rerank_top_n\": \"<integer>\",\n  \"retrieval_mode\": \"<string>\",\n  \"filters\": {\n    \"key_0\": 8341.940476336691\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "01ea9298-7860-4507-8691-60aacd0436c6",
+              "name": "Retrieval results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipeline_id",
+                    "retrieve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pipeline_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"dense_similarity_top_k\": 6,\n  \"sparse_similarity_top_k\": \"<integer>\",\n  \"enable_reranking\": true,\n  \"rerank_top_n\": \"<integer>\",\n  \"retrieval_mode\": \"<string>\",\n  \"filters\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6074.367347774807\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"retrieval_nodes\": [\n    {\n      \"node\": {\n        \"id\": \"string\",\n        \"text\": \"string\",\n        \"metadata\": {\n          \"key_0\": 5058,\n          \"key_1\": 2291,\n          \"key_2\": 9413.147629715302,\n          \"key_3\": 7572.268136845613,\n          \"key_4\": \"string\"\n        }\n      },\n      \"score\": 5711.681648953132\n    },\n    {\n      \"node\": {\n        \"id\": \"string\",\n        \"text\": \"string\",\n        \"metadata\": {\n          \"key_0\": 2614\n        }\n      },\n      \"score\": 4088.8548997957764\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01d6498e-0311-4f08-9a11-ca088a530df5",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipeline_id",
+                    "retrieve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pipeline_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"dense_similarity_top_k\": 6,\n  \"sparse_similarity_top_k\": \"<integer>\",\n  \"enable_reranking\": true,\n  \"rerank_top_n\": \"<integer>\",\n  \"retrieval_mode\": \"<string>\",\n  \"filters\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6074.367347774807\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2447273-4422-42d6-be46-92536e33df17",
+              "name": "Request validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipeline_id",
+                    "retrieve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pipeline_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"dense_similarity_top_k\": 6,\n  \"sparse_similarity_top_k\": \"<integer>\",\n  \"enable_reranking\": true,\n  \"rerank_top_n\": \"<integer>\",\n  \"retrieval_mode\": \"<string>\",\n  \"filters\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6074.367347774807\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.cloud.llamaindex.ai/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a3d56abc-2ab8-4472-89fd-8bfcf4d6fb2e",
+    "name": "LlamaCloud Documents Retrieval API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the LlamaCloud managed document platform from LlamaIndex, covering LlamaParse document parsing, managed ingestion pipelines and indexes, document and file management, retrieval, and LlamaExtract structured extraction. All endpoints are authenticated with a Bearer API key.\n\nContact Support:\n Name: LlamaIndex Support\n Email: support@llamaindex.ai",
+      "type": "text/plain"
+    }
+  }
+}

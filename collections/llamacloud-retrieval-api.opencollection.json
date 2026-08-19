@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LlamaCloud Documents Retrieval API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Retrieval",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve relevant chunks from a pipeline index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines/:pipeline_id/retrieve",
+            "params": [
+              {
+                "name": "pipeline_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Runs a retrieval query against a pipeline's managed index and returns the most relevant nodes, with optional reranking and metadata filters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

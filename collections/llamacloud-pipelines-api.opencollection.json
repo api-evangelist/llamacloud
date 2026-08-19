@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LlamaCloud Documents Pipelines API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pipelines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List pipelines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List pipelines"
+        },
+        {
+          "info": {
+            "name": "Create or upsert a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a managed ingestion and indexing pipeline."
+        },
+        {
+          "info": {
+            "name": "Get a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines/:pipeline_id",
+            "params": [
+              {
+                "name": "pipeline_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a pipeline"
+        },
+        {
+          "info": {
+            "name": "Get pipeline ingestion status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines/:pipeline_id/status",
+            "params": [
+              {
+                "name": "pipeline_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get pipeline ingestion status"
+        },
+        {
+          "info": {
+            "name": "Add files to a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/pipelines/:pipeline_id/files",
+            "params": [
+              {
+                "name": "pipeline_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Attaches previously uploaded files to a pipeline for ingestion."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

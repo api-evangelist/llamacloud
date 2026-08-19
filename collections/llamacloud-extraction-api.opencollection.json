@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LlamaCloud Documents Extraction API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Extraction",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List extraction agents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/extraction/extraction-agents"
+          },
+          "docs": "List extraction agents"
+        },
+        {
+          "info": {
+            "name": "Create an extraction agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/extraction/extraction-agents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Defines a LlamaExtract agent bound to a JSON data schema describing the fields to extract from documents."
+        },
+        {
+          "info": {
+            "name": "Run an extraction job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/extraction/jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Runs an extraction agent against an uploaded file and returns an async job id. Poll the job to retrieve the structured result."
+        },
+        {
+          "info": {
+            "name": "Get extraction job status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/extraction/jobs/:job_id",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get extraction job status"
+        },
+        {
+          "info": {
+            "name": "Get extraction job result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cloud.llamaindex.ai/api/v1/extraction/jobs/:job_id/result",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get extraction job result"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
