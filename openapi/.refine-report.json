@@ -1,11 +1,7 @@
 {
   "provider": "llamacloud",
   "sources": [
-    "llamacloud-documents-api-openapi.yml",
-    "llamacloud-extraction-api-openapi.yml",
-    "llamacloud-parsing-api-openapi.yml",
-    "llamacloud-pipelines-api-openapi.yml",
-    "llamacloud-retrieval-api-openapi.yml"
+    "_original/llamacloud-openapi.yml"
   ],
   "outputs": [
     "llamacloud-documents-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "llamacloud-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "llamacloud-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "llamacloud-extraction-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "llamacloud-parsing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "llamacloud-pipelines-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "llamacloud-retrieval-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

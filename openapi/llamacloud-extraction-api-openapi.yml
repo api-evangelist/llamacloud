@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: LlamaCloud Documents Extraction API
+  title: LlamaCloud Extraction API
   description: REST API for the LlamaCloud managed document platform from LlamaIndex, covering LlamaParse document parsing, managed ingestion pipelines and indexes, document and file management, retrieval, and LlamaExtract structured extraction. All endpoints are authenticated with a Bearer API key.
   termsOfService: https://www.llamaindex.ai/terms-of-service
   contact:
@@ -119,78 +119,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  schemas:
-    ExtractionAgentCreate:
-      type: object
-      required:
-      - name
-      - data_schema
-      properties:
-        name:
-          type: string
-        data_schema:
-          type: object
-          additionalProperties: true
-        config:
-          type: object
-          additionalProperties: true
-    ExtractionAgent:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        data_schema:
-          type: object
-          additionalProperties: true
-        project_id:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-    ExtractionResult:
-      type: object
-      properties:
-        data:
-          type: object
-          additionalProperties: true
-        extraction_metadata:
-          type: object
-          additionalProperties: true
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
-    ExtractionJobCreate:
-      type: object
-      required:
-      - extraction_agent_id
-      - file_id
-      properties:
-        extraction_agent_id:
-          type: string
-        file_id:
-          type: string
-    ExtractionJob:
-      type: object
-      properties:
-        id:
-          type: string
-        extraction_agent_id:
-          type: string
-        status:
-          type: string
-          enum:
-          - PENDING
-          - RUNNING
-          - SUCCESS
-          - ERROR
-          - CANCELLED
-        error_message:
-          type: string
-          nullable: true
   responses:
     NotFound:
       description: Resource not found.
@@ -210,6 +138,79 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  schemas:
+    ExtractionAgentCreate:
+      type: object
+      required:
+      - name
+      - data_schema
+      properties:
+        name:
+          type: string
+        data_schema:
+          type: object
+          additionalProperties: true
+        config:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    ExtractionResult:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+        extraction_metadata:
+          type: object
+          additionalProperties: true
+    ExtractionJob:
+      type: object
+      properties:
+        id:
+          type: string
+        extraction_agent_id:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - RUNNING
+          - SUCCESS
+          - ERROR
+          - CANCELLED
+        error_message:
+          type:
+          - string
+          - 'null'
+    ExtractionAgent:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        data_schema:
+          type: object
+          additionalProperties: true
+        project_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    ExtractionJobCreate:
+      type: object
+      required:
+      - extraction_agent_id
+      - file_id
+      properties:
+        extraction_agent_id:
+          type: string
+        file_id:
+          type: string
   parameters:
     JobId:
       name: job_id

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: LlamaCloud Documents Retrieval API
+  title: LlamaCloud Retrieval API
   description: REST API for the LlamaCloud managed document platform from LlamaIndex, covering LlamaParse document parsing, managed ingestion pipelines and indexes, document and file management, retrieval, and LlamaExtract structured extraction. All endpoints are authenticated with a Bearer API key.
   termsOfService: https://www.llamaindex.ai/terms-of-service
   contact:
@@ -44,16 +44,6 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   schemas:
-    Document:
-      type: object
-      properties:
-        id:
-          type: string
-        text:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
     RetrieveRequest:
       type: object
       required:
@@ -86,6 +76,16 @@ components:
       properties:
         detail:
           type: string
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
     RetrieveResponse:
       type: object
       properties:
@@ -99,6 +99,19 @@ components:
               score:
                 type: number
                 format: float
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     PipelineId:
       name: pipeline_id
@@ -106,19 +119,6 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    ValidationError:
-      description: Request validation failed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

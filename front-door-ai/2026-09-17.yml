@@ -1,0 +1,21 @@
+# Front Door AI Index — llamacloud — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: llamacloud
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: cloud.llamaindex.ai
+  final_host: login.llamaindex.ai
+  ownership: own
+  owner: llamacloud
+  shares_host_with: null
+  inherited_from: null
+  verdict: thin
+  score: null
+  host_score: null
+  density: null
+  words: 31
+  tiers: null
+  ambiguous: null
+  top_terms: null

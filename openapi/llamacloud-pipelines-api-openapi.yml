@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: LlamaCloud Documents Pipelines API
+  title: LlamaCloud Pipelines API
   description: REST API for the LlamaCloud managed document platform from LlamaIndex, covering LlamaParse document parsing, managed ingestion pipelines and indexes, document and file management, retrieval, and LlamaExtract structured extraction. All endpoints are authenticated with a Bearer API key.
   termsOfService: https://www.llamaindex.ai/terms-of-service
   contact:
@@ -138,13 +138,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    PipelineId:
-      name: pipeline_id
-      in: path
-      required: true
-      schema:
-        type: string
   responses:
     NotFound:
       description: Resource not found.
@@ -187,15 +180,6 @@ components:
         created_at:
           type: string
           format: date-time
-    PipelineFile:
-      type: object
-      properties:
-        id:
-          type: string
-        file_id:
-          type: string
-        pipeline_id:
-          type: string
     PipelineCreate:
       type: object
       required:
@@ -209,6 +193,22 @@ components:
         transform_config:
           type: object
           additionalProperties: true
+    PipelineFile:
+      type: object
+      properties:
+        id:
+          type: string
+        file_id:
+          type: string
+        pipeline_id:
+          type: string
+  parameters:
+    PipelineId:
+      name: pipeline_id
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

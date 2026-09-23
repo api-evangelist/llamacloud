@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: LlamaCloud Documents API
   description: REST API for the LlamaCloud managed document platform from LlamaIndex, covering LlamaParse document parsing, managed ingestion pipelines and indexes, document and file management, retrieval, and LlamaExtract structured extraction. All endpoints are authenticated with a Bearer API key.
@@ -111,16 +111,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Document:
-      type: object
-      properties:
-        id:
-          type: string
-        text:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
     Error:
       type: object
       properties:
@@ -142,13 +132,16 @@ components:
         created_at:
           type: string
           format: date-time
-  parameters:
-    PipelineId:
-      name: pipeline_id
-      in: path
-      required: true
-      schema:
-        type: string
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
   responses:
     Unauthorized:
       description: Missing or invalid API key.
@@ -156,6 +149,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    PipelineId:
+      name: pipeline_id
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
