@@ -110,12 +110,31 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    PipelineId:
+      name: pipeline_id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    Document:
       type: object
       properties:
-        detail:
+        id:
           type: string
+        text:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
     File:
       type: object
       properties:
@@ -132,30 +151,11 @@ components:
         created_at:
           type: string
           format: date-time
-    Document:
+    Error:
       type: object
       properties:
-        id:
+        detail:
           type: string
-        text:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    PipelineId:
-      name: pipeline_id
-      in: path
-      required: true
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

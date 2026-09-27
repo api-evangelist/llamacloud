@@ -120,8 +120,8 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: Resource not found.
+    ValidationError:
+      description: Request validation failed.
       content:
         application/json:
           schema:
@@ -132,32 +132,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: Request validation failed.
+    NotFound:
+      description: Resource not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    ExtractionAgentCreate:
-      type: object
-      required:
-      - name
-      - data_schema
-      properties:
-        name:
-          type: string
-        data_schema:
-          type: object
-          additionalProperties: true
-        config:
-          type: object
-          additionalProperties: true
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
     ExtractionResult:
       type: object
       properties:
@@ -186,6 +167,30 @@ components:
           type:
           - string
           - 'null'
+    ExtractionAgentCreate:
+      type: object
+      required:
+      - name
+      - data_schema
+      properties:
+        name:
+          type: string
+        data_schema:
+          type: object
+          additionalProperties: true
+        config:
+          type: object
+          additionalProperties: true
+    ExtractionJobCreate:
+      type: object
+      required:
+      - extraction_agent_id
+      - file_id
+      properties:
+        extraction_agent_id:
+          type: string
+        file_id:
+          type: string
     ExtractionAgent:
       type: object
       properties:
@@ -201,15 +206,10 @@ components:
         created_at:
           type: string
           format: date-time
-    ExtractionJobCreate:
+    Error:
       type: object
-      required:
-      - extraction_agent_id
-      - file_id
       properties:
-        extraction_agent_id:
-          type: string
-        file_id:
+        detail:
           type: string
   parameters:
     JobId:

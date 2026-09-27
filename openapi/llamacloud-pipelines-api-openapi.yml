@@ -138,31 +138,27 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: Request validation failed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    PipelineId:
+      name: pipeline_id
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
-    Error:
+    PipelineCreate:
       type: object
+      required:
+      - name
       properties:
-        detail:
+        name:
           type: string
+        embedding_config:
+          type: object
+          additionalProperties: true
+        transform_config:
+          type: object
+          additionalProperties: true
     Pipeline:
       type: object
       properties:
@@ -180,19 +176,11 @@ components:
         created_at:
           type: string
           format: date-time
-    PipelineCreate:
+    Error:
       type: object
-      required:
-      - name
       properties:
-        name:
+        detail:
           type: string
-        embedding_config:
-          type: object
-          additionalProperties: true
-        transform_config:
-          type: object
-          additionalProperties: true
     PipelineFile:
       type: object
       properties:
@@ -202,13 +190,25 @@ components:
           type: string
         pipeline_id:
           type: string
-  parameters:
-    PipelineId:
-      name: pipeline_id
-      in: path
-      required: true
-      schema:
-        type: string
+  responses:
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

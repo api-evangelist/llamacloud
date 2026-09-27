@@ -140,11 +140,14 @@ components:
         job_metadata:
           type: object
           additionalProperties: true
-    Error:
+    MarkdownResult:
       type: object
       properties:
-        detail:
+        markdown:
           type: string
+        job_metadata:
+          type: object
+          additionalProperties: true
     ParsingJob:
       type: object
       properties:
@@ -162,17 +165,14 @@ components:
           type:
           - string
           - 'null'
-    MarkdownResult:
+    Error:
       type: object
       properties:
-        markdown:
+        detail:
           type: string
-        job_metadata:
-          type: object
-          additionalProperties: true
   responses:
-    NotFound:
-      description: Resource not found.
+    ValidationError:
+      description: Request validation failed.
       content:
         application/json:
           schema:
@@ -183,8 +183,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: Request validation failed.
+    NotFound:
+      description: Resource not found.
       content:
         application/json:
           schema:
