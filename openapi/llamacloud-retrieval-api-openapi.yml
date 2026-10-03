@@ -43,27 +43,22 @@ paths:
         '422':
           $ref: '#/components/responses/ValidationError'
 components:
-  parameters:
-    PipelineId:
-      name: pipeline_id
-      in: path
-      required: true
-      schema:
-        type: string
-  responses:
-    ValidationError:
-      description: Request validation failed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
     RetrieveRequest:
       type: object
       required:
@@ -91,21 +86,6 @@ components:
         filters:
           type: object
           additionalProperties: true
-    Document:
-      type: object
-      properties:
-        id:
-          type: string
-        text:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
     RetrieveResponse:
       type: object
       properties:
@@ -119,6 +99,26 @@ components:
               score:
                 type: number
                 format: float
+  parameters:
+    PipelineId:
+      name: pipeline_id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

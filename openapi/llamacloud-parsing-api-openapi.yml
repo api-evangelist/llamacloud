@@ -118,28 +118,11 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    JsonResult:
+    Error:
       type: object
       properties:
-        pages:
-          type: array
-          items:
-            type: object
-            properties:
-              page:
-                type: integer
-              text:
-                type: string
-              md:
-                type: string
-              items:
-                type: array
-                items:
-                  type: object
-                  additionalProperties: true
-        job_metadata:
-          type: object
-          additionalProperties: true
+        detail:
+          type: string
     MarkdownResult:
       type: object
       properties:
@@ -165,14 +148,38 @@ components:
           type:
           - string
           - 'null'
-    Error:
+    JsonResult:
       type: object
       properties:
-        detail:
-          type: string
+        pages:
+          type: array
+          items:
+            type: object
+            properties:
+              page:
+                type: integer
+              text:
+                type: string
+              md:
+                type: string
+              items:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        job_metadata:
+          type: object
+          additionalProperties: true
+  parameters:
+    JobId:
+      name: job_id
+      in: path
+      required: true
+      schema:
+        type: string
   responses:
-    ValidationError:
-      description: Request validation failed.
+    NotFound:
+      description: Resource not found.
       content:
         application/json:
           schema:
@@ -183,19 +190,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
+    ValidationError:
+      description: Request validation failed.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    JobId:
-      name: job_id
-      in: path
-      required: true
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

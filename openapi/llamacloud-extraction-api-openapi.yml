@@ -119,26 +119,26 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    ValidationError:
-      description: Request validation failed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    ExtractionAgentCreate:
+      type: object
+      required:
+      - name
+      - data_schema
+      properties:
+        name:
+          type: string
+        data_schema:
+          type: object
+          additionalProperties: true
+        config:
+          type: object
+          additionalProperties: true
     ExtractionResult:
       type: object
       properties:
@@ -148,6 +148,16 @@ components:
         extraction_metadata:
           type: object
           additionalProperties: true
+    ExtractionJobCreate:
+      type: object
+      required:
+      - extraction_agent_id
+      - file_id
+      properties:
+        extraction_agent_id:
+          type: string
+        file_id:
+          type: string
     ExtractionJob:
       type: object
       properties:
@@ -167,30 +177,6 @@ components:
           type:
           - string
           - 'null'
-    ExtractionAgentCreate:
-      type: object
-      required:
-      - name
-      - data_schema
-      properties:
-        name:
-          type: string
-        data_schema:
-          type: object
-          additionalProperties: true
-        config:
-          type: object
-          additionalProperties: true
-    ExtractionJobCreate:
-      type: object
-      required:
-      - extraction_agent_id
-      - file_id
-      properties:
-        extraction_agent_id:
-          type: string
-        file_id:
-          type: string
     ExtractionAgent:
       type: object
       properties:
@@ -206,11 +192,6 @@ components:
         created_at:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
   parameters:
     JobId:
       name: job_id
@@ -218,6 +199,25 @@ components:
       required: true
       schema:
         type: string
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
