@@ -117,7 +117,48 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    JsonResult:
+      type: object
+      properties:
+        pages:
+          type: array
+          items:
+            type: object
+            properties:
+              page:
+                type: integer
+              text:
+                type: string
+              md:
+                type: string
+              items:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        job_metadata:
+          type: object
+          additionalProperties: true
     Error:
       type: object
       properties:
@@ -148,28 +189,6 @@ components:
           type:
           - string
           - 'null'
-    JsonResult:
-      type: object
-      properties:
-        pages:
-          type: array
-          items:
-            type: object
-            properties:
-              page:
-                type: integer
-              text:
-                type: string
-              md:
-                type: string
-              items:
-                type: array
-                items:
-                  type: object
-                  additionalProperties: true
-        job_metadata:
-          type: object
-          additionalProperties: true
   parameters:
     JobId:
       name: job_id
@@ -177,25 +196,6 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: Request validation failed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

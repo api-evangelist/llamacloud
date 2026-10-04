@@ -111,6 +111,16 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
     File:
       type: object
       properties:
@@ -132,23 +142,6 @@ components:
       properties:
         detail:
           type: string
-    Document:
-      type: object
-      properties:
-        id:
-          type: string
-        text:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
-  parameters:
-    PipelineId:
-      name: pipeline_id
-      in: path
-      required: true
-      schema:
-        type: string
   responses:
     Unauthorized:
       description: Missing or invalid API key.
@@ -156,6 +149,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    PipelineId:
+      name: pipeline_id
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

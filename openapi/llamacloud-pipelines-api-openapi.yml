@@ -139,10 +139,14 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Error:
+    PipelineFile:
       type: object
       properties:
-        detail:
+        id:
+          type: string
+        file_id:
+          type: string
+        pipeline_id:
           type: string
     PipelineCreate:
       type: object
@@ -157,15 +161,6 @@ components:
         transform_config:
           type: object
           additionalProperties: true
-    PipelineFile:
-      type: object
-      properties:
-        id:
-          type: string
-        file_id:
-          type: string
-        pipeline_id:
-          type: string
     Pipeline:
       type: object
       properties:
@@ -183,16 +178,14 @@ components:
         created_at:
           type: string
           format: date-time
-  parameters:
-    PipelineId:
-      name: pipeline_id
-      in: path
-      required: true
-      schema:
-        type: string
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
   responses:
-    NotFound:
-      description: Resource not found.
+    ValidationError:
+      description: Request validation failed.
       content:
         application/json:
           schema:
@@ -203,12 +196,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: Request validation failed.
+    NotFound:
+      description: Resource not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    PipelineId:
+      name: pipeline_id
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
