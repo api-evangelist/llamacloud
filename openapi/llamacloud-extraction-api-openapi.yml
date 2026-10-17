@@ -120,6 +120,16 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    ExtractionJobCreate:
+      type: object
+      required:
+      - extraction_agent_id
+      - file_id
+      properties:
+        extraction_agent_id:
+          type: string
+        file_id:
+          type: string
     ExtractionJob:
       type: object
       properties:
@@ -139,21 +149,6 @@ components:
           type:
           - string
           - 'null'
-    ExtractionJobCreate:
-      type: object
-      required:
-      - extraction_agent_id
-      - file_id
-      properties:
-        extraction_agent_id:
-          type: string
-        file_id:
-          type: string
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
     ExtractionResult:
       type: object
       properties:
@@ -177,6 +172,11 @@ components:
         config:
           type: object
           additionalProperties: true
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
     ExtractionAgent:
       type: object
       properties:

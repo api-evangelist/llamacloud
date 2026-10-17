@@ -44,16 +44,19 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   schemas:
-    Document:
+    RetrieveResponse:
       type: object
       properties:
-        id:
-          type: string
-        text:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
+        retrieval_nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              node:
+                $ref: '#/components/schemas/Document'
+              score:
+                type: number
+                format: float
     RetrieveRequest:
       type: object
       required:
@@ -81,24 +84,21 @@ components:
         filters:
           type: object
           additionalProperties: true
-    RetrieveResponse:
-      type: object
-      properties:
-        retrieval_nodes:
-          type: array
-          items:
-            type: object
-            properties:
-              node:
-                $ref: '#/components/schemas/Document'
-              score:
-                type: number
-                format: float
     Error:
       type: object
       properties:
         detail:
           type: string
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
   responses:
     ValidationError:
       description: Request validation failed.

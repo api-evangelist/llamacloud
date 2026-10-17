@@ -148,19 +148,6 @@ components:
           type: string
         pipeline_id:
           type: string
-    PipelineCreate:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-        embedding_config:
-          type: object
-          additionalProperties: true
-        transform_config:
-          type: object
-          additionalProperties: true
     Pipeline:
       type: object
       properties:
@@ -178,6 +165,19 @@ components:
         created_at:
           type: string
           format: date-time
+    PipelineCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        embedding_config:
+          type: object
+          additionalProperties: true
+        transform_config:
+          type: object
+          additionalProperties: true
     Error:
       type: object
       properties:

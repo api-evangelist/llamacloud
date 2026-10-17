@@ -117,25 +117,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    ValidationError:
-      description: Request validation failed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     JsonResult:
       type: object
@@ -159,19 +140,6 @@ components:
         job_metadata:
           type: object
           additionalProperties: true
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
-    MarkdownResult:
-      type: object
-      properties:
-        markdown:
-          type: string
-        job_metadata:
-          type: object
-          additionalProperties: true
     ParsingJob:
       type: object
       properties:
@@ -189,6 +157,38 @@ components:
           type:
           - string
           - 'null'
+    MarkdownResult:
+      type: object
+      properties:
+        markdown:
+          type: string
+        job_metadata:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+  responses:
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     JobId:
       name: job_id
