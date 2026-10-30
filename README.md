@@ -1,4 +1,4 @@
-# LlamaCloud (llamacloud)
+# LlamaCloud
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,148 +64,126 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-LlamaCloud is the managed document parsing, extraction, indexing, and retrieval platform from LlamaIndex. It exposes REST APIs at `https://api.cloud.llamaindex.ai` for LlamaParse (document parsing to Markdown/JSON), managed ingestion pipelines and indexes, document management, retrieval, and LlamaExtract (schema-driven structured extraction), all secured with a Bearer API key. This is the hosted cloud platform, distinct from the open-source LlamaIndex framework.
+LlamaCloud is the managed document parsing, extraction, indexing, and retrieval platform from LlamaIndex. It exposes REST APIs at https://api.cloud.llamaindex.ai for LlamaParse (document parsing to Markdown/JSON), managed ingestion pipelines and indexes, document management, retrieval, and LlamaExtract (schema-driven structured extraction), all secured with a Bearer API key. This is the hosted cloud platform, distinct from the open-source LlamaIndex framework.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/llamacloud/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/llamacloud/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · Document Parsing · Extraction · Indexing · Retrieval · RAG
 
-> Note: This catalog covers the hosted **LlamaCloud** platform (cloud.llamaindex.ai) and its cloud APIs. It is intentionally kept distinct from the separate `llamaindex` repository, which covers the open-source LlamaIndex framework.
+## LlamaCloud on APIs.io
 
-## Tags
+Everything profiled for LlamaCloud is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/llamacloud/](https://apis.io/providers/llamacloud/)** — or go straight to one of the APIs or properties below.
 
-- AI
-- Document Parsing
-- Extraction
-- Indexing
-- Retrieval
-- RAG
+### APIs (5)
 
-## Timestamps
+- [LlamaCloud Documents API](https://apis.io/apis/llamacloud/llamacloud-documents-api/) — Files and pipeline documents.
+- [LlamaCloud Extraction API](https://apis.io/apis/llamacloud/llamacloud-extraction-api/) — LlamaExtract schema-driven structured extraction.
+- [LlamaCloud Parsing API](https://apis.io/apis/llamacloud/llamacloud-parsing-api/) — LlamaParse document parsing jobs and results.
+- [LlamaCloud Pipelines API](https://apis.io/apis/llamacloud/llamacloud-pipelines-api/) — Managed ingestion and indexing pipelines.
+- [LlamaCloud Retrieval API](https://apis.io/apis/llamacloud/llamacloud-retrieval-api/) — Query a managed index for relevant chunks.
 
-- **Created:** 2026-06-20
-- **Modified:** 2026-06-20
+### Published properties
 
-## APIs
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### LlamaParse API
+#### Agentic access (1)
 
-Asynchronous document parsing that uploads files (PDF, DOCX, PPTX, images, and more) and returns clean Markdown or structured JSON. Submit a parse job, poll job status, and retrieve results in Markdown or JSON across Fast, Balanced, and Agentic tiers.
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- **Human URL:** [https://developers.llamaindex.ai/llamaparse](https://developers.llamaindex.ai/llamaparse)
-- **Base URL:** `https://api.cloud.llamaindex.ai/api/v1`
+- [Llamacloud Agentic Access](https://apis.io/agentic-access/llamacloud/llamacloud-agentic-access/)
 
-#### Tags
+#### Collections (6)
 
-- Parsing
-- Documents
-- OCR
-- Markdown
+Postman and Open Collection request collections.
 
-#### Properties
+- [LlamaCloud API](https://apis.io/collections/llamacloud/open-llamacloud/)
+- [LlamaCloud Documents API](https://apis.io/collections/llamacloud/open-llamacloud-documents-api/)
+- [LlamaCloud Documents Extraction API](https://apis.io/collections/llamacloud/open-llamacloud-extraction-api/)
+- [LlamaCloud Documents Parsing API](https://apis.io/collections/llamacloud/open-llamacloud-parsing-api/)
+- [LlamaCloud Documents Pipelines API](https://apis.io/collections/llamacloud/open-llamacloud-pipelines-api/)
+- [LlamaCloud Documents Retrieval API](https://apis.io/collections/llamacloud/open-llamacloud-retrieval-api/)
 
-- [Documentation](https://developers.llamaindex.ai/llamaparse)
-- [API Reference](https://developers.llamaindex.ai/cloud-api-reference/category/parsing)
-- [OpenAPI](openapi/llamacloud-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/llamacloud.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/llamacloud.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Security (2)
 
-### LlamaCloud Pipelines and Indexes API
+Authentication, trust centre, and vulnerability disclosure.
 
-Managed ingestion and indexing pipelines that chunk, embed, and store documents into a scalable vector index with no infrastructure to manage. Create and configure pipelines, attach files and data sources, and monitor ingestion status.
+- [Llamacloud Authentication](https://apis.io/security/llamacloud/llamacloud-authentication/)
+- [Llamacloud Domain Security](https://apis.io/security/llamacloud/llamacloud-domain-security/)
 
-- **Human URL:** [https://developers.llamaindex.ai/python/cloud/llamacloud/guides/api_sdk](https://developers.llamaindex.ai/python/cloud/llamacloud/guides/api_sdk)
-- **Base URL:** `https://api.cloud.llamaindex.ai/api/v1`
+#### Plans and pricing (1)
 
-#### Tags
+Published plans, tiers and prices.
 
-- Pipelines
-- Indexes
-- Ingestion
-- Embeddings
+- [Llamacloud Plans Pricing](https://apis.io/plans/llamacloud/llamacloud-plans-pricing/)
 
-#### Properties
+#### Rate limits (1)
 
-- [Documentation](https://developers.llamaindex.ai/python/cloud/llamacloud/guides/api_sdk)
-- [API Reference](https://developers.llamaindex.ai/cloud-api-reference)
-- [OpenAPI](openapi/llamacloud-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/llamacloud.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/llamacloud.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Published request limits.
 
-### LlamaCloud Documents and Files API
+- [Llamacloud Rate Limits](https://apis.io/rate-limits/llamacloud/llamacloud-rate-limits/)
 
-Upload, list, and manage files and the documents inside a pipeline. Add documents to an index, list pipeline documents, fetch document chunks, and delete documents from the managed index.
+#### FinOps (1)
 
-- **Human URL:** [https://developers.llamaindex.ai/cloud-api-reference](https://developers.llamaindex.ai/cloud-api-reference)
-- **Base URL:** `https://api.cloud.llamaindex.ai/api/v1`
+What the API costs to run, by operation.
 
-#### Tags
+- [Llamacloud Finops](https://apis.io/finops/llamacloud/llamacloud-finops/)
 
-- Documents
-- Files
-- Storage
+## Where to find this API
 
-#### Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- [Documentation](https://developers.llamaindex.ai/cloud-api-reference)
-- [API Reference](https://developers.llamaindex.ai/cloud-api-reference)
-- [OpenAPI](openapi/llamacloud-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/llamacloud.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/llamacloud.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### LlamaCloud Retrieval API
-
-Retrieve the most relevant chunks from a managed index for a natural language query, with Fast, Accurate, and Advanced retrieval modes, optional reranking, and metadata filtering for RAG workloads.
-
-- **Human URL:** [https://developers.llamaindex.ai/python/cloud/llamacloud/guides/api_sdk](https://developers.llamaindex.ai/python/cloud/llamacloud/guides/api_sdk)
-- **Base URL:** `https://api.cloud.llamaindex.ai/api/v1`
-
-#### Tags
-
-- Retrieval
-- Search
-- RAG
-- Reranking
-
-#### Properties
-
-- [Documentation](https://developers.llamaindex.ai/python/cloud/llamacloud/guides/api_sdk)
-- [API Reference](https://developers.llamaindex.ai/cloud-api-reference)
-- [OpenAPI](openapi/llamacloud-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/llamacloud.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/llamacloud.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### LlamaExtract API
-
-Schema-driven structured data extraction from documents. Define an extraction agent with a JSON data schema, run extraction jobs against uploaded files, and retrieve typed JSON results with field-level citations and metadata.
-
-- **Human URL:** [https://developers.llamaindex.ai/llamaextract](https://developers.llamaindex.ai/llamaextract)
-- **Base URL:** `https://api.cloud.llamaindex.ai/api/v1`
-
-#### Tags
-
-- Extraction
-- Structured Data
-- Schema
-- Agents
-
-#### Properties
-
-- [Documentation](https://developers.llamaindex.ai/llamaextract)
-- [API Reference](https://developers.llamaindex.ai/python/cloud/llamaextract/getting_started/api)
-- [OpenAPI](openapi/llamacloud-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/llamacloud.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/llamacloud.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/run-llama)
-- [LinkedIn](https://www.linkedin.com/company/llamaindex)
 - [Website](https://cloud.llamaindex.ai)
 - [Documentation](https://developers.llamaindex.ai)
-- [Plans](plans/llamacloud-plans-pricing.yml)
-- [Rate Limits](rate-limits/llamacloud-rate-limits.yml)
-- [Fin Ops](finops/llamacloud-finops.yml)
+- [Blog](https://www.llamaindex.ai/blog)
+- [GitHub](https://github.com/run-llama)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 28.8** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 47.6 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 32.1 |
+| Access clarity | 7.9 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.9** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/llamacloud/](https://apis.io/providers/llamacloud/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for LlamaCloud: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/llamacloud/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
